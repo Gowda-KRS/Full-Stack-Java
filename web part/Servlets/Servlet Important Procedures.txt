@@ -1,0 +1,426 @@
+http://tomcat.apache.org/
+http://localhost:9090
+
+
+D:\Developmentsoftwares\Tomcat9\webapps 
+in the above folder only we have to develop
+we have to develop all web applications
+1st - create app1 folder (also called project folder)
+
+- we can develop html,css,javascript files in app1 folder
+- even jsp file also in the same location
+
+- develop test1.html in the app1
+- http://localhost:9090/app1/test1.html
+
+-how to develop servlet
+we require additional directory structure.
+- inside app1 create onother folder called WEB-INF every character in the upper case
+- in the WEB-INF folder create a classes folder this should be same name and create
+src folder this can be with any name its for java files.
+-create deployment descriptor its XML file in the WEB-INF level
+
+- write java program
+D:\Developmentsoftwares\Tomcat9\webapps\app1\WEB-INF\src>javac -d ../classes com/aptech/*.java
+-we need describe in the deployment descriptor
+
+-after web.xml develoment restart the server
+
+http://localhost:9090/app1/hello
+
+- to identify the mistake in web.xml just press cntr + b it will show full structure if it is proper
+
+
+http://localhost:9090/app1/s2
+http://localhost:9090/app1/Servlet2
+http://localhost:9090/app1/xyz
+http://localhost:9090/app1/abc
+
+-supplying values through query string.
+-after ? any no. of input parameters.
+- '&' is the seperator between the inputs
+http://localhost:9090/app1/abc?param1="Hello"&firstName="vijay"
+
+- we can make a call to the servlet from html also
+
+- we dont need to restart the server if we just develop and call servlet from html.
+
+http://localhost:9090/app1/test2.html
+
+- all html files should be in the project folder.
+
+
+http://localhost:9090/app1/test3.html
+
+
+- use PrintWriter to write back anything to the browser through SOP we cant
+
+- to find out where this messages are printing come to 
+ tomcat9->logs-> 
+                 we can see the stdouts day wise it is creating
+
+- tomcat is a server that only requires class files not the java files.
+
+
+-------------------------------------------
+
+http://localhost:9090/app2/test1.html
+
+
+-without developing servlet, in the html if you give and submit you get 404 error 
+
+-after html,css,javascript client side dev is done
+
+
+---------------------WAR Dev-------------------------------------
+1. JAR is nothing but zipped format of java.
+2. In java to develop a kind of zip, we can use a JAR.
+3. Java archieve is nothing but zipped format in java.
+4. For core java appliations we will be using jar
+   once the core java appliation got over, then we take that core java
+   application content and making a jar file, and that jar file is sending
+   to the customer, customer will make use of the jar file, we can run jar
+   file using java command.
+5. in case of web application, in place of jar we will be using
+   WAR(WebArchive).
+   That WAR file we can run in any J2EE complient server.
+   it can be tomcat, jboss, web logic, web spear etc.
+6. WAR is also called as portable format of the web application.
+7. jar cf app5.war *
+   i,e create file name, complete content of the current directory,
+   includin the sub directories, extension .war can be aslo .jar
+8. deploy that in webapps folder.
+9. then restart the tom cat server, it will be creating one folder
+    you get complete content of war file.
+10. myapp>jar cf D:\Developmentsoftwares\Tomcat9\webapps\app6.war *
+   this also possible, absolute path
+
+------------------development with eclipse---------------
+1.we need javaee eclipse for this
+2. we need j2ee edition
+3. we can develop dynamic web application 
+4. before creating dynamic web app check if tom cat running outside or not
+5. create a new dynamic web project
+- eclipse doesnt have any target runtime environments- no tomcat,jre, database
+- chosse run time envronemnt- tomcat 9
+- if you dont get those lists then its not jee eclipse.
+-choose the folder name of tomcat installation
+-select dynamic web module version to 2.5
+- till now we have developed module version of 2.5
+-eclipse is using different directory structure for dynamic web application
+its eclipse specific,
+- every java program(any java pgm, servlet also)
+  you should develop inside the java resources->src folder 
+-under web content only we should develop, html, css, js, image, jsp files
+-inside webcontent->web-inf->lib we need to place all third party
+ jar files, we dont update build-path.
+- inside eclipse build path is only for core java projects
+- for all web apps we need to copy explicitely jar files into the lib
+  folder.
+-in the web-inf we have web.xml by default design view click source
+-diplay-name tag is providing a name to display
+-welcome-file-list - we are getting a readymade web.xml file.
+-this directory structure is specific to eclipse not universal.
+- previous development without eclipse, that is universal directory 
+  structure for web app development.
+-every j2ee complient servers expecting the directory structure like 
+ this not eclipse structure.
+-develop html file in web-content folder
+- just run with some content of html directly, no need of 
+configuring tomcat once again.
+-html, js, css, image, and jsp should be inside the web-content folder.
+-now develop simple servlet inside servlet
+Servlet1 with package com.aptech
+- click next it shows url mapping as /Servlet1
+-eclipse chooses class name itself as URL pattern
+-then uncheck dopost and doget. check service
+- in the web.xml you will get optional tags
+<description></description>
+    <display-name>Servlet1</display-name>
+-just keep these two statements inside the service method
+PrintWriter out = response.getWriter();
+		out.println("Hello to all from Servlet1");
+-just run. no need of restarting the server.
+-we dont require to mention the port number to call servlet in browser.
+just run
+- develop Servlet2 and html file and call the servelet from html
+just run the html file and click the link
+- develop another html file with simple form copy the action value and
+develop Servlet3
+- not url-mapping should not be the default one select edit and 
+paste that url-pattern 
+-override(check) only service method and uncheck doget, dopost
+-come to html and run the file, by restarting the tomcat
+you get empty form with submit just click submit you get the servlet call o/p
+
+-now we will develop the servlet which interacts with the db
+-creating another project
+-target runtime you dont have to configure once again
+ - target runtime will be configured only once in the workspace
+  - dynamic web module version keep 2.5 only
+
+
+
+
+-------------------Input to servlets----------------
+----reading the data from the browser-------------
+1. form data
+- String[] firstName = request.getParameterValues("firstName"); this method return the string
+array
+
+- make changes in the reg2.html
+now its multiselection drop down
+<select name="education" multiple>
+
+
+- if in the form method= 'post' then query string will not be generating, returns null
+-query string will not be generarating while form is submitting through post will get NPE 500 
+  error internal server error
+
+-------------constants
+- not only we can read form data in the servlet but we can read constants also 
+
+-configuring constants to entire application
+
+--------------servlet life cycle-------------
+-for the first request object will be created with no-arg constructor.
+-then init method and service method
+-every time you refresh the browser that is the next request and we get service method 
+-for the first request only constructor,init,servlet9.service then only servlet9.service for
+every another request.
+-go to the servers tab and right click and select stop then you will see destroy method executes
+-service method only responsible for serving the customer request.
+-in every servlet there should be no-arg constructor. otherwise we get error
+500 internal server error, instantiation exception
+-while manually starting the server object wont be created, while making the first request then
+the servlet object is creating. this is reffrred to as lazy loading.
+-we can create the object initially by manual by keeping <load-on-startup>1</load-on-startup>
+in <servlet> tag.
+-number on load-on-startup says the order which one should execute first.
+-we should not give the number as 0 or same number bcz server will execute it randomly.
+
+-----architecture---------
+servlet-api.jar
+-------------
+1.javax.servlet.*
+2.javax.servlet.http.*
+
+
+1. javax.servlet.*
+------------------------
+   1.Servlet
+   2.ServletConfig
+   3.ServletContext
+   4.ServletRequest
+   5.ServletResponse
+   6.GenericServlet
+   7.RequestDispatcher
+
+2. javax.servlet.http.*
+-------------------------
+   1.HttpServlet
+   2.HttpServletRequest
+   3.HttpServletResponse
+   4.HttpSession
+   5.Cookie
+
+---------DoGet and DoPost----------
+- just develop the DoGet in the servlet
+now we are making the call to servlet through Get
+-server calls service method only but we didnt override service method 
+when sever calls service method it will read method type if method type is get 
+it will call DoGet method
+
+-suppose we only overrided doPost directly making a call to servlet through browser
+if we didnt override the doget we get error by default it will call doget.
+
+-always advisable to develop servlet by using doGet and doPost
+
+-one is returning form to the customer and second receiving form from the customer.
+-getting filled form from the customer doGet method composing the form and returning the form
+to the customer.
+-doPost method receving filled form from the customer and processing that data.
+
+
+
+---------------Init Methods-----------------------------
+Servlet is an interface
+-Generic servlet is an abstract class
+-Http servlet is also an abstract class
+-Then we are developing our HelloServlet
+-Servlet contains life-cycle methods
+  1.init()
+  2.service()
+  3.destroy()
+  - These are inheriting to GenericServlet
+  - in the GenericServlet init method and destroy methods got implemented
+    but not service method.
+  - service method leaving to the protocol specific classes like HttpServlet
+  - in the HttpsServlet service method got implemented by considering
+    http protocol methods like get and post. 
+    for get they develped doGet method and post they developed doPost method
+- in the servlet interface there is an argument init method that is inheriting
+  to GenericServlet. in the GenericServlet init method got implemented.
+  this is how init method got implemented.(see word doc)
+
+
+- in the GenericServlet there is an attribute of ServletConfig type
+  -same getting initialized through argument init method
+  -argument init method taking argument as a Servletconfig
+  -same is initializing to the global attribute.
+  -at last it is calling no-arg init method.
+  -it is newly incorporated method in the GenericServlet
+
+- all most all the methods of GenericServlet are using global attribute config
+
+- if argument init method not executed then config will be null
+  while calling return config.geInitParameter(name); you will get NullPointerException
+ - this config is used in all the remaining methods of GenericServlet
+
+-argument init method from the GenericServlet should execute at any cost
+ bcz argument init method initializing global attribute, because that global
+ attribute is used in almost all the methods of GenericServlet. if it is not
+ initialized then we get NullPointerException
+
+-Same argument init method is inheriting to HttpServlet
+ in the HttpServlet it is not overrided and same gets inherited to our 
+ HelloServlet. 
+ - In the HelloServlet we should not override argument init method
+   if we are overriding argument init method then GenericServlet attribute 
+   will not be initalizing. if it is not initialized then the methods got 
+   iniherited from GenericServlet to HelloServlet those cant be used.
+   if we try to use them we get NullPointerException.
+-server will call by default init method of GenericServlet in the HelloServlet
+
+
+------demonstration----
+-develop a servlet and override init method and doGet method
+-protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String s1 = getInitParameter("");
+		System.out.println("done");
+	}
+-you get NullPointerException
+- just comment the argument init method
+-or keep super.init(config)
+
+public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+	}
+--Interview question why do we use super.init(config) while overriding init method
+
+
+-only one time init method is executing
+
+- so instead of inheriting arg-init method just override no-arg init method
+ this is the best way.
+ public void init() throws ServletException {
+		System.out.println("init()");
+	}
+- server will always call arg-init method not no-arg init method.
+
+- two things here initializing servlet arhitecture(hierarchy)
+  in the GenericServlet there are so many methods which are using config
+  that config should be initalized. we can call it as API initialization
+
+- Server is supplying servlet config to the init method that servlet config
+  is used by several method of GenericServlet.
+  whaterver object sending by the server that should be assigned to global
+  attribute of GenericServlet. then most of the built-in methods works properly.
+  most of the methods are depending on the object which is sending by the server.
+  sever knows about every information about our servlet context.
+  once that got initialized then only we should look for application 
+  specific initialization.
+
+two types of initialization
+1. default or built-in initialization.
+2. then application specific initialization.
+
+conclusion: here dont override argumet-init method if you did without fail 
+you should keep super.init(config) otherwise NullPointerException
+-instead of that go for no-arg method
+-server wont call no-arg init method straight-away
+ server first calls arg init method by supplying ServletConfig object to argument
+ init method.
+
+
+-for every servlet server sending ServletConfig object.
+ its like one to one for one servlet one ServletConfig object will be supplied by the server.
+ that ServletConfig will be having all run-time parameters including 
+ server run-time environment.
+-server responsible to ServletConfig object to servlet object through arg-init method
+ as soon as servlet execution got over immediately init method calling by the server
+-server sending servlet-config object to init method
+
+- ServletConfig object will be containing servlet specific information.
+- ServletConfig object not only contains servlet specific information
+ it is also containing server information.
+ - server responsibility to send a server information and servlet specific 
+ information to a particular servlet.
+- for a servlet while calling init method it is supplying servlet config object
+- in the ServletConfig object it is incorporating ServletContext object also
+  ServletContext object is global to entire application.
+  ServletContext object containing server information and global information	
+  for our application.
+-ServletContext is a global object which is available in entire application.
+for one application one ServletContext object. that servlet context object
+contains application information and even server information.
+whenerver server sending servlet config object to a servlet it is incorporating
+servlet specific information and also reference of the ServletContext.
+
+- every ServletConfig object having reference of ServletContext but for 
+entire application only one ServletContext.
+-wrt servlet config it is specific to a servlet. for every servlet
+one servlet config object but for entire application one servlet context object
+
+-------interviewer will ask difference b/w servlet config and servlet context--------
+
+- first constructor and init method will be called then after we are calling argument init method
+- we can directly initialize in the constrctor instead of the argument init method
+then why do we need this argument init method.
+- init method is a callback method, automatically server is calling
+  through init method only. servlet is getting the main information about run-time context
+  where this servlet object is running that information is getting through
+  servlet config object. that servlet config object is sending to the init method
+  we are not calling init method. server only calling init method. we are
+  not calling constructor, server only creating object. at the time of object
+  creating constructor is executing but by the time of executing constructor
+  servlet doesnt have run-time information even servlet specific configuration.
+  first object is creating then only init method is calling while creating an
+  object it doesnt have servlet config object, after object creation then
+  calling init method. 
+  so inside a constructor body we cant use getInitParamter() we get NullPointerException
+  bcz by the time of creating an object constructor is executing by the time
+  GenericServlet config is null only.
+  in the constructor body you cant use any inherited methods.
+  we can use inherited methods once GenericServlet config got initialized.
+  that is getting initialized through argument constructor. after argument
+  constructor use the no-arg constructor. if we are implementing anything
+  in the no-arg constructor that is executing after argument init method.
+  initialize in the no-arg init method that no-arg init method is executing
+  after argument init method GenricServlet config gets initialized.
+  by the time of executing servlet constructor GenericServlet config is the 
+  null we cant use any inherited methods but by the time of calling no-arg
+  init method GenericServlet config got initialized. then we can use every
+  inherited method
+
+- in the servlet architecture init methods are specificaly designed in order to 
+initialize some built-in execution then only we can go for our application
+specific initialization.
+in the servlets developement we will not be using no-arg constructor at-all
+in order to initialize. go for no-arg init method, we can also go for 
+argument init method but we need to keep super.init(config).
+the best way is to initialize application specific initialization in the
+servlets developement no-arg init method. not the constructor body not even
+argument init method. compare to constructor body argument init method is more suitable
+just we need to keep super.init(config) statment.
+so dont use constructors at all in case of web application developements.
+- that is why in the servlet if we develop constructor overloading we wont
+be using that.
+- we can develop any no. of constructors but server only using no-arg constructor
+we are not creating object to the servlet. if we create we can use any constructor.
+but server only creating the object. while server is creating the object
+it is using no-arg constructor.
+- so please ensure every time servlet should have a no-arg constructor.
+if not we will be getting an exception why bcz server creating an object
+to servlet class by using no-arg constructor only. if that is not available
+then we get runtime exception.
